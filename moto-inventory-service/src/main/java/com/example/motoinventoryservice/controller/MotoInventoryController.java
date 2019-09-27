@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Size;
 import java.util.Random;
 
 @RestController
@@ -53,5 +54,11 @@ public class MotoInventoryController {
 
         // do nothing here - in a real application we would update the entry in the backing data store
         motoDao.updateMotorcycle(motorcycle);
+    }
+
+    @GetMapping(value = "/motorcycles")
+    @ResponseStatus(HttpStatus.OK)
+    public Motorcycle getMotorcycleByVin(@RequestParam @Valid @Size(min = 5, max = 5) String vin) {
+        return null;
     }
 }
