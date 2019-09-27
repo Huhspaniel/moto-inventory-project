@@ -1,12 +1,17 @@
 package com.example.motoinventoryservice.controller;
 
+import com.example.motoinventoryservice.controller.feign.VinLookupFeignClient;
 import com.example.motoinventoryservice.dao.MotoInventoryDao;
 import com.example.motoinventoryservice.model.Motorcycle;
+import com.example.motoinventoryservice.model.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Size;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @RestController
@@ -14,6 +19,9 @@ public class MotoInventoryController {
 
     @Autowired
     MotoInventoryDao motoDao;
+
+    @Autowired
+    VinLookupFeignClient feignClient;
 
     @RequestMapping(value = "/motorcycles", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -53,5 +61,20 @@ public class MotoInventoryController {
 
         // do nothing here - in a real application we would update the entry in the backing data store
         motoDao.updateMotorcycle(motorcycle);
+    }
+
+    @GetMapping(value = "/vehicle/{vin}")
+    @ResponseStatus(HttpStatus.OK)
+    public Map<String, String> getMotorcycleByVin(@PathVariable @Valid @Size(min = 5, max = 5) String vin) {
+        Vehicle vehicle = feignClient.getVehicleByVin(vin);
+
+        Map<String, String> vehicleInfo = new HashMap<>();
+        vehicleInfo.put("Vehicle Type", vehicle.getType());
+        vehicleInfo.put("Vehicle Make", vehicle.getMake());
+        vehicleInfo.put("Vehicle Model", vehicle.getModel());
+        vehicleInfo.put("Vehicle Year", vehicle.getYear());
+        vehicleInfo.put("Vehicle Color", vehicle.getColor());
+
+        return vehicleInfo;
     }
 }
