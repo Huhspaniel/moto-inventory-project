@@ -16,7 +16,7 @@ public class MotoInventoryDaoJdbcTemplateImpl implements MotoInventoryDao {
 
     // Prepared statement strings
     private static final String INSERT_MOTO_SQL =
-            "insert into motorcycle (vin, make, model, year, color) values (?, ?, ?, ? ?)";
+            "insert into motorcycle (vin, make, model, year, color) values (?, ?, ?, ?, ?)";
 
     private static final String SELECT_MOTO_SQL =
             "select * from motorcycle where id = ?";
