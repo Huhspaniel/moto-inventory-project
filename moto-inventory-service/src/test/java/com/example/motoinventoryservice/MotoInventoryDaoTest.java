@@ -27,8 +27,7 @@ public class MotoInventoryDaoTest {
         // clean out the test db
         List<Motorcycle> mList = dao.getAllMotorcycles();
 
-        mList.stream()
-                .forEach(motorcycle -> dao.deleteMotorcycle(motorcycle.getId()));
+        mList.forEach(motorcycle -> dao.deleteMotorcycle(motorcycle.getId()));
     }
 
     @After
@@ -110,6 +109,15 @@ public class MotoInventoryDaoTest {
         moto.setModel("DRZ 400");
         moto.setYear("2016");
         moto.setColor("black");
+
+        dao.addMotorcycle(moto);
+
+        moto = new Motorcycle();
+        moto.setVin("44444");
+        moto.setMake("Ducati");
+        moto.setModel("blah");
+        moto.setYear("2016");
+        moto.setColor("blue");
 
         dao.addMotorcycle(moto);
 
