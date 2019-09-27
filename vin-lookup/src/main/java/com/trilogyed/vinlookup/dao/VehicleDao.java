@@ -4,6 +4,8 @@ import com.trilogyed.vinlookup.model.Vehicle;
 
 public interface VehicleDao {
 
-    public Vehicle getVehicleByVin(String vin);
+    Vehicle getVehicleByVin(String vin);
+
+    void deleteAll();
 
 }

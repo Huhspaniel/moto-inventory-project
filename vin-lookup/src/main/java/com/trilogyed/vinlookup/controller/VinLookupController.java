@@ -19,7 +19,7 @@ public class VinLookupController {
 
     @RequestMapping (value = "/vehicle/{vin}", method = RequestMethod.GET)
     public Vehicle lookUpVehicle(@PathVariable String vin) {
-        
+
         return vehicleDao.getVehicleByVin(vin);
     }
 }
